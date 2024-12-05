@@ -1,15 +1,27 @@
 import axios from "axios";
-import { Appointment } from "@/types/Appointment";
-import { Doctor } from "@/types/Doctor";
-import { Patient } from "@/types/Patient";
-import { ServiceResult } from "@/types/ServiceResult";
-import { CreateDoctorRequest } from "@/types/dtos/CreateDoctorRequest";
-import { CreatePatientRequest } from "@/types/dtos/CreatePatientRequest";
-import { CreateAppointmentRequest } from "@/types/dtos/CreateAppointmentRequest";
+
+// Dtos
+import { CategoryDto } from '@/models/categories/CategoryDto';
+import { CreateCategoryRequest } from '@/models/categories/CreateCategoryRequest';
+import { UpdateCategoryRequest } from '@/models/categories/UpdateCategoryRequest';
+import { CreateEventRequest } from '@/models/events/CreateEventRequest';
+import { EventDto } from '@/models/events/EventDto';
+import { UpdateEventRequest } from '@/models/events/UpdateEventRequest';
+import { CreateInstructorRequest } from '@/models/instructors/CreateInstructorRequest';
+import { InstructorDto } from '@/models/instructors/InstructorDto';
+import { UpdateInstructorRequest } from '@/models/instructors/UpdateInstructorRequest';
+import { CreateVideoEducationRequest } from '@/models/videoEducations/CreateVideoEducationRequest';
+import { UpdateVideoEducationRequest } from '@/models/videoEducations/UpdateVideoEducationRequest';
+import { VideoEducationDto } from '@/models/videoEducations/VideoEducationDto';
 
 const api = axios.create({
   baseURL: "https://localhost:7192/api/",
 });
+
+export const getCategories = async (): Promise<CategoryDto[]> => {
+  const response = await api.get<CategoryDto[]>("category/getlist");
+  return response.data;
+}
 
 export const getAppointments = async (): Promise<
   ServiceResult<Appointment[]>
