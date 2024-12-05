@@ -9,11 +9,10 @@ import List from "@mui/material/List";
 import Typography from "@mui/material/Typography";
 import Divider from "@mui/material/Divider";
 import DashboardIcon from "@mui/icons-material/Dashboard";
-import LocalHospitalIcon from "@mui/icons-material/LocalHospital";
-import PersonIcon from "@mui/icons-material/Person";
-import PersonAddIcon from "@mui/icons-material/PersonAdd";
-import EventIcon from "@mui/icons-material/Event";
-import EditCalendarIcon from "@mui/icons-material/EditCalendar";
+import CategoryIcon from "@mui/icons-material/Category";
+import EventIcon from '@mui/icons-material/Event';
+import PersonIcon from '@mui/icons-material/Person';
+import VideoLibraryIcon from '@mui/icons-material/VideoLibrary';
 import MenuListItem from "./MenuListItem";
 
 const drawerWidth = 240;
@@ -28,7 +27,7 @@ export default function DashboardLayout({ children }: React.PropsWithChildren) {
       >
         <Toolbar>
           <Typography variant="h6" noWrap component="div">
-            Hospital Booking
+            TechCareer
           </Typography>
         </Toolbar>
       </AppBar>
@@ -49,32 +48,24 @@ export default function DashboardLayout({ children }: React.PropsWithChildren) {
             <MenuListItem label="Dashboard" Icon={DashboardIcon} href="/" />
             <Divider />
             <MenuListItem
-              label="Doctors"
-              Icon={LocalHospitalIcon}
-              href="/doctors"
+              label="Categories"
+              Icon={CategoryIcon}
+              href="/categories"
             />
             <MenuListItem
-              label="Add Doctor"
-              Icon={LocalHospitalIcon}
-              href="/doctors/create"
-            />
-            <Divider />
-            <MenuListItem label="Patients" Icon={PersonIcon} href="/patients" />
-            <MenuListItem
-              label="Add Patient"
-              Icon={PersonAddIcon}
-              href="/patients/create"
-            />
-            <Divider />
-            <MenuListItem
-              label="Appointment"
+              label="Events"
               Icon={EventIcon}
-              href="/appointments"
+              href="/events"
             />
             <MenuListItem
-              label="Add Appointment"
-              Icon={EditCalendarIcon}
-              href="/appointments/create"
+              label="Instructors"
+              Icon={PersonIcon}
+              href="/instructors"
+            />
+            <MenuListItem
+              label="Video Educations"
+              Icon={VideoLibraryIcon}
+              href="/videoEducations"
             />
           </List>
         </Box>

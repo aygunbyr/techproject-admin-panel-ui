@@ -8,8 +8,8 @@ import DashboardLayout from "@/components/DashboardLayout";
 import ClientProviders from "@/components/ClientProviders";
 
 export const metadata: Metadata = {
-  title: "Hospital Appointment Booking",
-  description: "Hospital Appointment Booking UI",
+  title: "TechCareer",
+  description: "TechCareer Admin Panel UI",
 };
 
 export default function RootLayout({
