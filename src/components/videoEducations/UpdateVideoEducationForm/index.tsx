@@ -1,14 +1,14 @@
 "use client";
 // General
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
-import { useMutation, useQueryClient } from "@tanstack/react-query";
+import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import { AxiosError } from "axios";
 
 // Form
 import { Controller, useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { createVideoEducationSchema, CreateVideoEducationFormModel } from "./schema";
+import { updateVideoEducationSchema, UpdateVideoEducationFormModel } from "./schema";
 
 // Material UI
 import Alert from "@mui/material/Alert";
@@ -19,15 +19,20 @@ import InputLabel from "@mui/material/InputLabel";
 import MenuItem from "@mui/material/MenuItem";
 import Select from "@mui/material/Select";
 import TextField from "@mui/material/TextField";
+import Typography from "@mui/material/Typography";
 import { LocalizationProvider } from "@mui/x-date-pickers";
 import { AdapterDateFns } from "@mui/x-date-pickers/AdapterDateFns";
 
 // Services, types
-import { createVideoEducation } from '@/services/videoEducations';
+import { getVideoEducationById, updateVideoEducation } from '@/services/videoEducations';
 import { VideoEducationDto } from '@/models/videoEducations/VideoEducationDto';
-import { CreateVideoEducationRequest } from '@/models/videoEducations/CreateVideoEducationRequest';
+import { UpdateVideoEducationRequest } from '@/models/videoEducations/UpdateVideoEducationRequest';
 
-export default function CreateVideoEducationForm() {
+type UpdateVideoEducationFormProps = {
+  id: number;
+}
+
+export default function UpdateVideoEducationForm({id}: UpdateVideoEducationFormProps) {
   const queryClient = useQueryClient();
   const router = useRouter();
   const [serverSideErrors, setServerSideErrors] = useState<string[]>([]);
@@ -35,10 +40,11 @@ export default function CreateVideoEducationForm() {
   const {
     register,
     handleSubmit,
+    reset,
     control,
     formState: { errors },
-  } = useForm<CreateVideoEducationFormModel>({
-    resolver: zodResolver(createVideoEducationSchema),
+  } = useForm<UpdateVideoEducationFormModel>({
+    resolver: zodResolver(updateVideoEducationSchema),
     defaultValues: {
       title: "",
       description: "",
@@ -51,13 +57,36 @@ export default function CreateVideoEducationForm() {
     },
   });
 
-  const createVideoEducationMutation = useMutation<
+  const {
+    data: videoEducation,
+    error,
+    isError,
+    isLoading,
+  } = useQuery<VideoEducationDto>({
+    queryKey: ['videoEducation', id],
+    queryFn: () => getVideoEducationById(id),
+  });
+
+  useEffect(() => {
+    reset({
+      title: videoEducation?.title,
+      description: videoEducation?.description,
+      totalHour: videoEducation?.totalHour,
+      isCertified: videoEducation?.isCertified,
+      level: videoEducation?.level,
+      imageUrl: videoEducation?.imageUrl,
+      instructorId: videoEducation?.instructorId,
+      programmingLanguage: videoEducation?.programmingLanguage,
+    });
+  }, [videoEducation, reset])
+
+  const updateVideoEducationMutation = useMutation<
     VideoEducationDto,
     unknown,
-    CreateVideoEducationRequest
+    UpdateVideoEducationRequest
   >({
-    mutationFn: (createVideoEducationRequest: CreateVideoEducationRequest) =>
-      createVideoEducation(createVideoEducationRequest),
+    mutationFn: (updateVideoEducationRequest: UpdateVideoEducationRequest) =>
+      updateVideoEducation(id, updateVideoEducationRequest),
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ["videoEducations"] });
       router.push("/videoEducations");
@@ -71,12 +100,20 @@ export default function CreateVideoEducationForm() {
     },
   });
 
-  const onSubmit = (data: CreateVideoEducationFormModel) => {
+  const onSubmit = (data: UpdateVideoEducationFormModel) => {
     setIsSubmitting(true);
     setServerSideErrors([]);
 
-    createVideoEducationMutation.mutate(data as unknown as CreateVideoEducationRequest);
+    updateVideoEducationMutation.mutate(data as unknown as UpdateVideoEducationRequest);
   };
+
+  if (isLoading) {
+    return <Typography>Loading...</Typography>;
+  }
+
+  if (isError) {
+    return <Typography>Failed fetching video education. Error: {error.message}</Typography>;
+  }
 
   return (
     <LocalizationProvider dateAdapter={AdapterDateFns}>
@@ -196,7 +233,7 @@ export default function CreateVideoEducationForm() {
           color="primary"
           fullWidth
         >
-          {isSubmitting ? "Submitting..." : "Create"}
+          {isSubmitting ? "Submitting..." : "Update"}
         </Button>
       </Box>
     </LocalizationProvider>

@@ -15,7 +15,16 @@ const columns = [
     type: "boolean",
     renderCell: (params) => (params.value ? "Yes" : "No"),
   },
-  { field: "level", headerName: "Level", flex: 1 },
+  { 
+    field: "level", 
+    headerName: "Level",
+    flex: 1,
+    type: "number",
+    renderCell: (params) => (
+      params.value == 0 ? "Beginner" : 
+      params.value == 1 ? "Intermediate" : 
+      params.value == 2 ? "Advanced" : "")
+  },
   { field: "imageUrl", headerName: "Image URL", flex: 1},
   { field: "instructorName", headerName: "Instructor Name", flex: 1 },
   { field: "programmingLanguage", headerName: "Programming Language", flex: 1},
