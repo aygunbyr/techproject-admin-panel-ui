@@ -80,7 +80,7 @@ export default function CreateVideoEducationForm() {
 
   return (
     <LocalizationProvider dateAdapter={AdapterDateFns}>
-      {serverSideErrors.map((error, index) => (
+      {Array.isArray(serverSideErrors) && serverSideErrors?.map((error, index) => (
         <Alert
           key={index}
           severity="error"

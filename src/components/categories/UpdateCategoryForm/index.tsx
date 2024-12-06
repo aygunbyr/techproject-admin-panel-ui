@@ -96,7 +96,7 @@ export default function UpdateCategoryForm({id} : UpdateCategoryFormProps) {
 
   return (
     <>
-      {serverSideErrors.map((error, index) => (
+      {Array.isArray(serverSideErrors) && serverSideErrors?.map((error, index) => (
         <Alert
           key={index}
           severity="error"

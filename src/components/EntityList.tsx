@@ -92,7 +92,7 @@ export default function EntityList<T, TPrimaryKey>({
 
   return (
     <>
-      {serverSideErrors.map((error, index) => (
+      {Array.isArray(serverSideErrors) && serverSideErrors?.map((error, index) => (
         <Alert
           key={index}
           severity="error"

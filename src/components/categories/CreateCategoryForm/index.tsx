@@ -66,7 +66,7 @@ export default function CreateCategoryForm() {
 
   return (
     <>
-      {serverSideErrors.map((error, index) => (
+      {Array.isArray(serverSideErrors) && serverSideErrors?.map((error, index) => (
         <Alert
           key={index}
           severity="error"
