@@ -1,5 +1,5 @@
 import Typography from "@mui/material/Typography";
-import CreateEventForm from '@/components/CreateEventForm';
+import CreateEventForm from '@/components/events/CreateEventForm';
 
 export default function CreateEvent() {
   return (

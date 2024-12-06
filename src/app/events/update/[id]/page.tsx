@@ -1,5 +1,5 @@
 import Typography from '@mui/material/Typography';
-import UpdateEventForm from '@/components/UpdateEventForm';
+import UpdateEventForm from '@/components/events/UpdateEventForm';
 
 
 export default function UpdateEvent(props: { params: { id: string }}) {

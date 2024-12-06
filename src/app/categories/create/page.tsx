@@ -1,5 +1,5 @@
 import Typography from "@mui/material/Typography";
-import CreateCategoryForm from '@/components/CreateCategoryForm';
+import CreateCategoryForm from '@/components/categories/CreateCategoryForm';
 
 export default function CreateCategory() {
   return (

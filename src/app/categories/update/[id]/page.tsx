@@ -1,6 +1,5 @@
 import Typography from '@mui/material/Typography';
-import UpdateCategoryForm from '@/components/UpdateCategoryForm';
-
+import UpdateCategoryForm from '@/components/categories/UpdateCategoryForm';
 
 export default function UpdateCategory(props: { params: { id: string }}) {
   const categoryId = parseInt(props.params.id)

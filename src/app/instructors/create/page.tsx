@@ -1,5 +1,5 @@
 import Typography from "@mui/material/Typography";
-import CreateInstructorForm from '@/components/CreateInstructorForm';
+import CreateInstructorForm from '@/components/instructors/CreateInstructorForm';
 
 export default function CreateInstructor() {
   return (
