@@ -19,7 +19,7 @@ const columns = [
 
 export default function EventsList() {
   return (
-    <EntityList<EventDto>
+    <EntityList<EventDto, string>
       entityName="events"
       entityNameSingular="event"
       getItems={getEvents}

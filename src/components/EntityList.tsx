@@ -17,23 +17,23 @@ import DialogTitle from "@mui/material/DialogTitle";
 import { DataGrid, GridColDef } from "@mui/x-data-grid";
 import { useQuery, useMutation, useQueryClient } from "@tanstack/react-query";
 
-interface EntityListProps<T> {
+interface EntityListProps<T, TPrimaryKey> {
   entityName: string;
   entityNameSingular: string;
   getItems: () => Promise<T[]>;
-  deleteItem: (id: string | number) => Promise<T>;
+  deleteItem: (id: TPrimaryKey) => Promise<T>;
   columns: GridColDef[];
 }
 
-export default function EntityList<T>({
+export default function EntityList<T, TPrimaryKey>({
   entityName,
   entityNameSingular,
   getItems,
   deleteItem,
   columns,
-}: EntityListProps<T>) {
+}: EntityListProps<T, TPrimaryKey>) {
   const [open, setOpen] = useState<boolean>(false);
-  const [selectedId, setSelectedId] = useState<string | number | null>(null);
+  const [selectedId, setSelectedId] = useState<TPrimaryKey | null>(null);
   const [serverSideErrors, setServerSideErrors] = useState<string[]>([]);
   const [isSubmitting, setIsSubmitting] = useState<boolean>(false);
 
@@ -54,7 +54,7 @@ export default function EntityList<T>({
     },
   });
 
-  const handleClickOpen = (id: number | string) => {
+  const handleClickOpen = (id: TPrimaryKey) => {
     setSelectedId(id);
     setOpen(true);
   };

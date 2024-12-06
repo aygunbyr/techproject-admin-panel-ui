@@ -25,7 +25,7 @@ const columns = [
 
 export default function VideoEducationsList() {
   return (
-    <EntityList<VideoEducationDto>
+    <EntityList<VideoEducationDto, number>
       entityName="videoEducations"
       entityNameSingular="video education"
       getItems={getVideoEducations}

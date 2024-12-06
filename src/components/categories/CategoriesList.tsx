@@ -12,7 +12,7 @@ const columns = [
 
 export default function CategoriesList() {
   return (
-    <EntityList<CategoryDto>
+    <EntityList<CategoryDto, number>
       entityName="categories"
       entityNameSingular="category"
       getItems={getCategories}
