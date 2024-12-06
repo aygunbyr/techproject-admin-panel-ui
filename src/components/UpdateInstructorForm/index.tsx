@@ -110,6 +110,7 @@ export default function UpdateInstructorForm({id} : UpdateInstructorFormProps) {
       <Box component="form" onSubmit={handleSubmit(onSubmit)}>
         <TextField
           type="text"
+          variant="filled"
           label="Name"
           {...register("name")}
           error={!!errors.name}
@@ -119,6 +120,7 @@ export default function UpdateInstructorForm({id} : UpdateInstructorFormProps) {
         />
         <TextField
           type="text"
+          variant="filled"
           label="About"
           {...register("about")}
           error={!!errors.about}

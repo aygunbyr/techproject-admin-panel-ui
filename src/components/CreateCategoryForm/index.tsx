@@ -78,6 +78,7 @@ export default function CreateCategoryForm() {
       <Box component="form" onSubmit={handleSubmit(onSubmit)}>
         <TextField
           type="text"
+          variant="filled"
           label="Name"
           {...register("name")}
           error={!!errors.name}

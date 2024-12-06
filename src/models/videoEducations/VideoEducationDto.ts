@@ -6,6 +6,7 @@ export class VideoEducationDto {
   isCertified: boolean;
   level: number;
   imageUrl: string;
+  instructorId: string;
   instructorName: string;
   programmingLanguage: string;
   createdDate: string;

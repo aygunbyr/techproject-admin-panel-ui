@@ -79,6 +79,7 @@ export default function CreateInstructorForm() {
       <Box component="form" onSubmit={handleSubmit(onSubmit)}>
         <TextField
           type="text"
+          variant="filled"
           label="Full Name"
           {...register("name")}
           error={!!errors.name}
@@ -88,6 +89,7 @@ export default function CreateInstructorForm() {
         />
         <TextField
           type="text"
+          variant="filled"
           label="About"
           {...register("about")}
           error={!!errors.about}

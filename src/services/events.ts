@@ -8,7 +8,7 @@ export const getEvents = async (): Promise<EventDto[]> => {
   return response.data;
 }
 
-export const getEventById = async (id: number): Promise<EventDto> => {
+export const getEventById = async (id: string): Promise<EventDto> => {
   const response = await api.get<EventDto>(`events/${id}`);
   return response.data;
 }
@@ -20,14 +20,14 @@ export const createEvent = async (request: CreateEventRequest): Promise<EventDto
   return response.data;
 }
 
-export const updateEvent = async (id: number, request: UpdateEventRequest): Promise<EventDto> => {
+export const updateEvent = async (id: string, request: UpdateEventRequest): Promise<EventDto> => {
   const response = await api.put<EventDto>(`events?id=${id}`, request, {
     headers: {"Content-Type": "application/json",}
   });
   return response.data;
 }
 
-export const deleteEvent = async (id: number): Promise<EventDto> => {
+export const deleteEvent = async (id: string): Promise<EventDto> => {
   const response = await api.delete<EventDto>(`events?id=${id}`);
   return response.data;
 }

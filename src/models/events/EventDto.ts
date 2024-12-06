@@ -7,6 +7,7 @@ export class EventDto {
   endDate: string;
   applicationDeadline: string;
   participationText: string;
+  categoryId: number;
   categoryName: string;
   createdDate: string;
   updatedDate: string;
