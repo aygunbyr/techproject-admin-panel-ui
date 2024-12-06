@@ -8,7 +8,7 @@ import { AxiosError } from "axios";
 // Form
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { createCategorySchema, CreateCategoryFormModel } from "./schema";
+import { createInstructorSchema, CreateInstructorFormModel } from "./schema";
 
 // Material UI
 import Alert from "@mui/material/Alert";
@@ -17,11 +17,11 @@ import Button from "@mui/material/Button";
 import TextField from "@mui/material/TextField";
 
 // Services, types
-import { createCategory } from '@/services/categories';
-import { CategoryDto } from '@/models/categories/CategoryDto';
-import { CreateCategoryRequest } from '@/models/categories/CreateCategoryRequest';
+import { createInstructor } from '@/services/instructors';
+import { InstructorDto } from '@/models/instructors/InstructorDto';
+import { CreateInstructorRequest } from '@/models/instructors/CreateInstructorRequest';
 
-export default function CreateCategoryForm() {
+export default function CreateInstructorForm() {
   const queryClient = useQueryClient();
   const router = useRouter();
   const [serverSideErrors, setServerSideErrors] = useState<string[]>([]);
@@ -30,23 +30,24 @@ export default function CreateCategoryForm() {
     register,
     handleSubmit,
     formState: { errors },
-  } = useForm<CreateCategoryFormModel>({
-    resolver: zodResolver(createCategorySchema),
+  } = useForm<CreateInstructorFormModel>({
+    resolver: zodResolver(createInstructorSchema),
     defaultValues: {
       name: "",
+      about: "",
     },
   });
 
-  const createCategoryMutation = useMutation<
-    CategoryDto,
+  const createInstructorMutation = useMutation<
+    InstructorDto,
     unknown,
-    CreateCategoryRequest
+    CreateInstructorRequest
   >({
-    mutationFn: (createCategoryRequest: CreateCategoryRequest) =>
-      createCategory(createCategoryRequest),
+    mutationFn: (createInstructorRequest: CreateInstructorRequest) =>
+      createInstructor(createInstructorRequest),
     onSuccess: () => {
-      queryClient.invalidateQueries({ queryKey: ["categories"] });
-      router.push("/categories");
+      queryClient.invalidateQueries({ queryKey: ["instructors"] });
+      router.push("/instructors");
     },
     onError: (error) => {
       console.log(error);
@@ -57,11 +58,11 @@ export default function CreateCategoryForm() {
     },
   });
 
-  const onSubmit = (data: CreateCategoryFormModel) => {
+  const onSubmit = (data: CreateInstructorFormModel) => {
     setIsSubmitting(true);
     setServerSideErrors([]);
 
-    createCategoryMutation.mutate(data as unknown as CreateCategoryRequest);
+    createInstructorMutation.mutate(data as unknown as CreateInstructorRequest);
   };
 
   return (
@@ -78,10 +79,19 @@ export default function CreateCategoryForm() {
       <Box component="form" onSubmit={handleSubmit(onSubmit)}>
         <TextField
           type="text"
-          label="Name"
+          label="Full Name"
           {...register("name")}
           error={!!errors.name}
           helperText={errors.name?.message}
+          fullWidth
+          margin="normal"
+        />
+        <TextField
+          type="text"
+          label="About"
+          {...register("about")}
+          error={!!errors.about}
+          helperText={errors.about?.message}
           fullWidth
           margin="normal"
         />

@@ -8,7 +8,7 @@ import { AxiosError } from "axios";
 // Form
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { updateCategorySchema, UpdateCategoryFormModel } from "./schema";
+import { updateInstructorSchema, UpdateInstructorFormModel } from "./schema";
 
 // Material UI
 import Alert from "@mui/material/Alert";
@@ -18,16 +18,16 @@ import TextField from "@mui/material/TextField";
 import Typography from '@mui/material/Typography';
 
 // Services, types
-import { getCategoryById, updateCategory } from '@/services/categories';
-import { CategoryDto } from '@/models/categories/CategoryDto';
-import { UpdateCategoryRequest } from '@/models/categories/UpdateCategoryRequest';
+import { getInstructorById, updateInstructor } from '@/services/instructors';
+import { InstructorDto } from '@/models/instructors/InstructorDto';
+import { UpdateInstructorRequest } from '@/models/instructors/UpdateInstructorRequest';
 
 
-type UpdateCategoryFormProps = {
+type UpdateInstructorFormProps = {
   id: number;
 }
 
-export default function UpdateCategoryForm({id} : UpdateCategoryFormProps) {
+export default function UpdateInstructorForm({id} : UpdateInstructorFormProps) {
   const queryClient = useQueryClient();
   const router = useRouter();
   const [serverSideErrors, setServerSideErrors] = useState<string[]>([]);
@@ -37,39 +37,41 @@ export default function UpdateCategoryForm({id} : UpdateCategoryFormProps) {
     handleSubmit,
     reset,
     formState: { errors },
-  } = useForm<UpdateCategoryFormModel>({
-    resolver: zodResolver(updateCategorySchema),
+  } = useForm<UpdateInstructorFormModel>({
+    resolver: zodResolver(updateInstructorSchema),
     defaultValues: {
       name: "",
+      about: "",
     },
   });
 
   const {
-    data: category,
+    data: instructor,
     error,
     isError,
     isLoading,
-  } = useQuery<CategoryDto>({
-    queryKey: ['category', id],
-    queryFn: () => getCategoryById(id),
+  } = useQuery<InstructorDto>({
+    queryKey: ['instructor', id],
+    queryFn: () => getInstructorById(id),
   });
 
   useEffect(() => {
     reset({
-      name: category?.name,
+      name: instructor?.name,
+      about: instructor?.about,
     });
-  }, [category, reset])
+  }, [instructor, reset])
 
-  const updateCategoryMutation = useMutation<
-    CategoryDto,
+  const updateInstructorMutation = useMutation<
+    InstructorDto,
     unknown,
-    UpdateCategoryRequest
+    UpdateInstructorRequest
   >({
-    mutationFn: (updateCategoryRequest: UpdateCategoryRequest) =>
-      updateCategory(id, updateCategoryRequest),
+    mutationFn: (updateInstructorRequest: UpdateInstructorRequest) =>
+      updateInstructor(id, updateInstructorRequest),
     onSuccess: () => {
-      queryClient.invalidateQueries({ queryKey: ["categories"] });
-      router.push("/categories");
+      queryClient.invalidateQueries({ queryKey: ["instructors"] });
+      router.push("/instructors");
     },
     onError: (error) => {
       setServerSideErrors(
@@ -79,11 +81,11 @@ export default function UpdateCategoryForm({id} : UpdateCategoryFormProps) {
     },
   });
 
-  const onSubmit = (data: UpdateCategoryFormModel) => {
+  const onSubmit = (data: UpdateInstructorFormModel) => {
     setIsSubmitting(true);
     setServerSideErrors([]);
 
-    updateCategoryMutation.mutate(data as unknown as UpdateCategoryRequest);
+    updateInstructorMutation.mutate(data as unknown as UpdateInstructorRequest);
   };
 
   if (isLoading) {
@@ -91,7 +93,7 @@ export default function UpdateCategoryForm({id} : UpdateCategoryFormProps) {
   }
 
   if (isError) {
-    return <Typography>Failed fetching category. Error: {error.message}</Typography>;
+    return <Typography>Failed fetching instructor. Error: {error.message}</Typography>;
   }
 
   return (
@@ -112,6 +114,15 @@ export default function UpdateCategoryForm({id} : UpdateCategoryFormProps) {
           {...register("name")}
           error={!!errors.name}
           helperText={errors.name?.message}
+          fullWidth
+          margin="normal"
+        />
+        <TextField
+          type="text"
+          label="About"
+          {...register("about")}
+          error={!!errors.about}
+          helperText={errors.about?.message}
           fullWidth
           margin="normal"
         />
