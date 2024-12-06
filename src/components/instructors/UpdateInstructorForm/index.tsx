@@ -24,7 +24,7 @@ import { UpdateInstructorRequest } from '@/models/instructors/UpdateInstructorRe
 
 
 type UpdateInstructorFormProps = {
-  id: number;
+  id: string;
 }
 
 export default function UpdateInstructorForm({id} : UpdateInstructorFormProps) {

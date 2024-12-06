@@ -8,7 +8,13 @@ const columns = [
   { field: "title", headerName: "Title", flex: 1 },
   { field: "description", headerName: "Description", flex: 1},
   { field: "totalHour", headerName: "Total Hour", flex: 1 },
-  { field: "isCertified", headerName: "Is Certified", flex: 1},
+  { 
+    field: "isCertified", 
+    headerName: "Is Certified", 
+    flex: 1,
+    type: "boolean",
+    renderCell: (params) => (params.value ? "Yes" : "No"),
+  },
   { field: "level", headerName: "Level", flex: 1 },
   { field: "imageUrl", headerName: "Image URL", flex: 1},
   { field: "instructorName", headerName: "Instructor Name", flex: 1 },
@@ -24,6 +30,7 @@ export default function VideoEducationsList() {
       entityNameSingular="video education"
       getItems={getVideoEducations}
       deleteItem={deleteVideoEducation}
+      // @ts-expect-error Material UI related problem
       columns={columns}
     />
   );

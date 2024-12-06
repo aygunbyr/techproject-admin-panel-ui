@@ -8,7 +8,7 @@ export const getInstructors = async (): Promise<InstructorDto[]> => {
   return response.data;
 }
 
-export const getInstructorById = async (id: number): Promise<InstructorDto> => {
+export const getInstructorById = async (id: string): Promise<InstructorDto> => {
   const response = await api.get<InstructorDto>(`instructors/getone/${id}`);
   return response.data;
 }
@@ -20,14 +20,14 @@ export const createInstructor = async (request: CreateInstructorRequest): Promis
   return response.data;
 }
 
-export const updateInstructor = async (id: number, request: UpdateInstructorRequest): Promise<InstructorDto> => {
+export const updateInstructor = async (id: string, request: UpdateInstructorRequest): Promise<InstructorDto> => {
   const response = await api.put<InstructorDto>(`instructors/update/${id}`, request, {
     headers: {"Content-Type": "application/json",}
   });
   return response.data;
 }
 
-export const deleteInstructor = async (id: number): Promise<InstructorDto> => {
+export const deleteInstructor = async (id: string): Promise<InstructorDto> => {
   const response = await api.delete<InstructorDto>(`instructors/delete/${id}`);
   return response.data;
 }

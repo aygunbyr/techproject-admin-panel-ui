@@ -6,7 +6,7 @@ import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { AxiosError } from "axios";
 
 // Form
-import { useForm } from "react-hook-form";
+import { Controller, useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { createVideoEducationSchema, CreateVideoEducationFormModel } from "./schema";
 
@@ -14,6 +14,10 @@ import { createVideoEducationSchema, CreateVideoEducationFormModel } from "./sch
 import Alert from "@mui/material/Alert";
 import Box from "@mui/material/Box";
 import Button from "@mui/material/Button";
+import FormControl from "@mui/material/FormControl";
+import InputLabel from "@mui/material/InputLabel";
+import MenuItem from "@mui/material/MenuItem";
+import Select from "@mui/material/Select";
 import TextField from "@mui/material/TextField";
 import { LocalizationProvider } from "@mui/x-date-pickers";
 import { AdapterDateFns } from "@mui/x-date-pickers/AdapterDateFns";
@@ -31,6 +35,7 @@ export default function CreateVideoEducationForm() {
   const {
     register,
     handleSubmit,
+    control,
     formState: { errors },
   } = useForm<CreateVideoEducationFormModel>({
     resolver: zodResolver(createVideoEducationSchema),
@@ -115,7 +120,25 @@ export default function CreateVideoEducationForm() {
           fullWidth
           margin="normal"
         />
-        {/* Is Certified için Select eklenecek */}
+        <FormControl fullWidth variant="filled" margin="normal">
+          <InputLabel id="isCertified-label">Is Certified</InputLabel>
+          <Controller
+            name="isCertified"
+            control={control}
+            defaultValue={false}
+            render={({ field }) => (
+              <Select
+                labelId="isCertified-label"
+                {...field}
+                value={field.value ? "true" : "false"}
+                onChange={(e) => field.onChange(e.target.value === "true")}
+              >
+                <MenuItem value="true">Yes</MenuItem>
+                <MenuItem value="false">No</MenuItem>
+              </Select>
+            )}
+          />
+        </FormControl>
         <TextField
           type="number"
           variant="filled"

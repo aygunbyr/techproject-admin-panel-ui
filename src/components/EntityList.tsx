@@ -21,7 +21,7 @@ interface EntityListProps<T> {
   entityName: string;
   entityNameSingular: string;
   getItems: () => Promise<T[]>;
-  deleteItem: (id: number) => Promise<T>;
+  deleteItem: (id: string | number) => Promise<T>;
   columns: GridColDef[];
 }
 
@@ -33,7 +33,7 @@ export default function EntityList<T>({
   columns,
 }: EntityListProps<T>) {
   const [open, setOpen] = useState<boolean>(false);
-  const [selectedId, setSelectedId] = useState<number | null>(null);
+  const [selectedId, setSelectedId] = useState<string | number | null>(null);
   const [serverSideErrors, setServerSideErrors] = useState<string[]>([]);
   const [isSubmitting, setIsSubmitting] = useState<boolean>(false);
 
@@ -54,7 +54,7 @@ export default function EntityList<T>({
     },
   });
 
-  const handleClickOpen = (id: number) => {
+  const handleClickOpen = (id: number | string) => {
     setSelectedId(id);
     setOpen(true);
   };
