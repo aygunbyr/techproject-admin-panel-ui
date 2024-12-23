@@ -53,6 +53,7 @@ export default function UpdateCategoryForm({ id }: UpdateCategoryFormProps) {
   });
 
   useEffect(() => {
+    if (!category) return;
     const updateDto = Mapper.mapFromDto(UpdateCategoryRequest, category);
     reset({
       ...updateDto,

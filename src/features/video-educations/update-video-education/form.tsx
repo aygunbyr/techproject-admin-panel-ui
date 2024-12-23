@@ -74,16 +74,16 @@ export default function UpdateVideoEducationForm({
     queryFn: () => getVideoEducationById(id),
   });
 
-  const updateDto = Mapper.mapFromDto(
-    UpdateVideoEducationRequest,
-    videoEducation
-  );
-
   useEffect(() => {
+    if (!videoEducation) return;
+    const updateDto = Mapper.mapFromDto(
+      UpdateVideoEducationRequest,
+      videoEducation
+    );
     reset({
       ...updateDto,
     });
-  }, [videoEducation, updateDto, reset]);
+  }, [videoEducation, reset]);
 
   const { mutate, httpError, validationErrors, isSubmitting } =
     useGenericMutation<VideoEducationDto, UpdateVideoEducationRequest>({

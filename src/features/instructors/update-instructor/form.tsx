@@ -55,6 +55,7 @@ export default function UpdateInstructorForm({
   });
 
   useEffect(() => {
+    if (!instructor) return;
     const updateDto = Mapper.mapFromDto(UpdateInstructorRequest, instructor);
     reset({
       ...updateDto,

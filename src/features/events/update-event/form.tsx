@@ -62,6 +62,7 @@ export default function UpdateEventForm({ id }: UpdateEventFormProps) {
   });
 
   useEffect(() => {
+    if (!event) return;
     const updateDto = Mapper.mapFromDto(UpdateEventRequest, event);
     reset({
       ...updateDto,
