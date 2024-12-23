@@ -1,4 +1,4 @@
-import InstructorsList from '@/components/instructors/InstructorsList'
+import InstructorsList from '@/features/instructors/list'
 
 export default function InstructorsPage() {
   return <InstructorsList />

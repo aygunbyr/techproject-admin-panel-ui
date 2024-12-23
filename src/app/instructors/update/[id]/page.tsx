@@ -1,5 +1,5 @@
 import Typography from '@mui/material/Typography';
-import UpdateInstructorForm from '@/components/instructors/UpdateInstructorForm';
+import UpdateInstructorForm from '@/features/instructors/update-instructor/form';
 
 
 export default function UpdateInstructor(props: { params: { id: string }}) {

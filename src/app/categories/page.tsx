@@ -1,4 +1,4 @@
-import CategoriesList from '@/components/categories/CategoriesList'
+import CategoriesList from '@/features/categories/list'
 
 export default function CategoriesPage() {
   return <CategoriesList />

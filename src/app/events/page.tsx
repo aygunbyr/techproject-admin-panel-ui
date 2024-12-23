@@ -1,4 +1,4 @@
-import EventsList from '@/components/events/EventsList'
+import EventsList from '@/features/events/list'
 
 export default function EventsPage() {
   return <EventsList />
